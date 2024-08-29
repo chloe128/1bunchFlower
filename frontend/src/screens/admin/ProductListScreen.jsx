@@ -7,33 +7,36 @@ import Loader from "../../components/Loader";
 import {
   useGetProductsQuery,
   //useDeleteProductMutation,
-  //useCreateProductMutation,
+  useCreateProductMutation,
 } from "../../slices/productsApiSlice";
 import { toast } from "react-toastify";
+import { LinkContainer } from "react-router-bootstrap";
 
 const ProductListScreen = () => {
-  const { pageNumber } = useParams();
+  //const { pageNumber } = useParams();
 
-  const { data, isLoading, error, refetch } = useGetProductsQuery({
-    pageNumber,
-  });
+  // const { data, isLoading, error, refetch } = useGetProductsQuery({
+  //   pageNumber,
+  // });
 
-  const [
-    deleteProduct,
-    { isLoading: loadingDelete },
-  ] = useDeleteProductMutation();
+  // const [
+  //   deleteProduct,
+  //   { isLoading: loadingDelete },
+  // ] = useDeleteProductMutation();
 
   const deleteHandler = async (id) => {
-    if (window.confirm("Are you sure")) {
-      try {
-        await deleteProduct(id);
-        refetch();
-      } catch (err) {
-        toast.error(err?.data?.message || err.error);
-      }
-    }
+    // if (window.confirm("Are you sure")) {
+    //   try {
+    //     await deleteProduct(id);
+    //     refetch();
+    //   } catch (err) {
+    //     toast.error(err?.data?.message || err.error);
+    //   }
+    // }
+    console.log("delete");
   };
 
+  const { data: products, isLoading, error, refetch } = useGetProductsQuery();
   const [
     createProduct,
     { isLoading: loadingCreate },
@@ -62,9 +65,8 @@ const ProductListScreen = () => {
           </Button>
         </Col>
       </Row>
-
       {loadingCreate && <Loader />}
-      {loadingDelete && <Loader />}
+      {/* {loadingDelete && <Loader />} */}
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -83,7 +85,7 @@ const ProductListScreen = () => {
               </tr>
             </thead>
             <tbody>
-              {data.products.map((product) => (
+              {products.map((product) => (
                 <tr key={product._id}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
@@ -91,14 +93,11 @@ const ProductListScreen = () => {
                   <td>{product.category}</td>
                   <td>{product.brand}</td>
                   <td>
-                    <Button
-                      as={Link}
-                      to={`/admin/product/${product._id}/edit`}
-                      variant="light"
-                      className="btn-sm mx-2"
-                    >
-                      <FaEdit />
-                    </Button>
+                    <LinkContainer to={`/admin/product/${product._id}/edit`}>
+                      <Button variant="light" className="btn-sm mx-2">
+                        <FaEdit />
+                      </Button>
+                    </LinkContainer>
                     <Button
                       variant="danger"
                       className="btn-sm"
@@ -111,7 +110,7 @@ const ProductListScreen = () => {
               ))}
             </tbody>
           </Table>
-          <Paginate pages={data.pages} page={data.page} isAdmin={true} />
+          {/* <Paginate pages={data.pages} page={data.page} isAdmin={true} /> */}
         </>
       )}
     </>
