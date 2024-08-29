@@ -49,3 +49,12 @@ export const orderApiSlice = apiSlice.injectEndpoints({
     }),
   }),
 });
+export const {
+  useCreateOrderMutation,
+  useGetOrderDetailsQuery,
+  usePayOrderMutation,
+  useGetPaypalClientIdQuery,
+  useGetMyOrdersQuery,
+  useGetOrdersQuery,
+  useDeliverOrderMutation,
+} = orderApiSlice;
