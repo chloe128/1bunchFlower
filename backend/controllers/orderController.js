@@ -20,17 +20,17 @@ const addOrderItems = asyncHandler(async (req, res) => {
     });
 
     // map over the order items and use the price from our items from database
-    const dbOrderItems = orderItems.map((itemFromClient) => {
-      const matchingItemFromDB = itemsFromDB.find(
-        (itemFromDB) => itemFromDB._id.toString() === itemFromClient._id
-      );
-      return {
-        ...itemFromClient,
-        product: itemFromClient._id,
-        price: matchingItemFromDB.price,
-        _id: undefined,
-      };
-    });
+    // const dbOrderItems = orderItems.map((itemFromClient) => {
+    //   const matchingItemFromDB = itemsFromDB.find(
+    //     (itemFromDB) => itemFromDB._id.toString() === itemFromClient._id
+    //   );
+    //   return {
+    //     ...itemFromClient,
+    //     product: itemFromClient._id,
+    //     price: matchingItemFromDB.price,
+    //     _id: undefined,
+    //   };
+    // });
 
     // calculate prices
     const { itemsPrice, taxPrice, shippingPrice, totalPrice } = calcPrices(
@@ -38,7 +38,11 @@ const addOrderItems = asyncHandler(async (req, res) => {
     );
 
     const order = new Order({
-      orderItems: dbOrderItems,
+      orderItems: orderItems.map((x) => ({
+        ...x,
+        product: x._id,
+        _id: undefined,
+      })),
       user: req.user._id,
       shippingAddress,
       paymentMethod,
