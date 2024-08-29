@@ -27,6 +27,28 @@ const ProfileScreen = () => {
       setEmail(userInfo.email);
     }
   }, [userInfo.name, userInfo.email]);
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    console.log("submit");
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+    } else {
+      try {
+        const res = await updateProfile({
+          // NOTE: here we don't need the _id in the request payload as this is
+          // not used in our controller.
+          // _id: userInfo._id,
+          name,
+          email,
+          password,
+        }).unwrap();
+        dispatch(setCredentials({ ...res }));
+        toast.success("Profile updated successfully");
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
+    }
+  };
 
   return <div>Profilescreen</div>;
   //const { data: orders, isLoading, error } = useGetMyOrdersQuery();
@@ -41,27 +63,7 @@ const ProfileScreen = () => {
   //   setEmail(userInfo.email);
   // }, [userInfo.email, userInfo.name]);
 
-  // const submitHandler = async (e) => {
-  //   e.preventDefault();
-  //   if (password !== confirmPassword) {
-  //     toast.error("Passwords do not match");
-  //   } else {
-  //     try {
-  //       const res = await updateProfile({
-  //         // NOTE: here we don't need the _id in the request payload as this is
-  //         // not used in our controller.
-  //         // _id: userInfo._id,
-  //         name,
-  //         email,
-  //         password,
-  //       }).unwrap();
-  //       dispatch(setCredentials({ ...res }));
-  //       toast.success("Profile updated successfully");
-  //     } catch (err) {
-  //       toast.error(err?.data?.message || err.error);
-  //     }
-  //   }
-  // };
+  //
 
   // return (
   //   <Row>
