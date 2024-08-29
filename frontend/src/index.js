@@ -7,7 +7,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import { Provider } from "react-redux";
+
 import store from "./store";
 //import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/styles/bootstrap.custom.css";
