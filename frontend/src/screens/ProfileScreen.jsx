@@ -12,11 +12,11 @@ import { setCredentials } from "../slices/authSlice";
 import { Link } from "react-router-dom";
 
 const ProfileScreen = () => {
-  return <div>Profilescreen</div>;
-  // const [name, setName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [confirmPassword, setConfirmPassword] = useState("");
+  //return <div>Profilescreen</div>;
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   // const { userInfo } = useSelector((state) => state.auth);
 
