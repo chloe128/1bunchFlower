@@ -18,9 +18,12 @@ const ProfileScreen = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  // const { userInfo } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
-  // const { data: orders, isLoading, error } = useGetMyOrdersQuery();
+  const { userInfo } = useSelector((state) => state.auth);
+
+  useEffect(() => {});
+  //const { data: orders, isLoading, error } = useGetMyOrdersQuery();
 
   // const [
   //   updateProfile,
@@ -32,7 +35,6 @@ const ProfileScreen = () => {
   //   setEmail(userInfo.email);
   // }, [userInfo.email, userInfo.name]);
 
-  // const dispatch = useDispatch();
   // const submitHandler = async (e) => {
   //   e.preventDefault();
   //   if (password !== confirmPassword) {
