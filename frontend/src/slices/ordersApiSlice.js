@@ -29,7 +29,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
-    getMyOrders: builder.query({
+    getMyOrder: builder.query({
       query: () => ({
         url: `${ORDERS_URL}/mine`,
       }),
