@@ -21,33 +21,36 @@ const ProfileScreen = () => {
 
   const { userInfo } = useSelector((state) => state.auth);
 
+  const [
+    updateProfile,
+    { isLoading: loadingUpdateProfile },
+  ] = useProfileMutation();
+
   useEffect(() => {
     if (userInfo) {
       setName(userInfo.name);
       setEmail(userInfo.email);
     }
-  }, [userInfo.name, userInfo.email]);
+  }, [userInfo, userInfo.name, userInfo.email]);
   const submitHandler = async (e) => {
     e.preventDefault();
     console.log("submit");
-    // if (password !== confirmPassword) {
-    //   toast.error("Passwords do not match");
-    // } else {
-    //   try {
-    //     const res = await updateProfile({
-    //       // NOTE: here we don't need the _id in the request payload as this is
-    //       // not used in our controller.
-    //       // _id: userInfo._id,
-    //       name,
-    //       email,
-    //       password,
-    //     }).unwrap();
-    //     dispatch(setCredentials({ ...res }));
-    //     toast.success("Profile updated successfully");
-    //   } catch (err) {
-    //     toast.error(err?.data?.message || err.error);
-    //   }
-    // }
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+    } else {
+      try {
+        const res = await updateProfile({
+          _id: userInfo._id,
+          name,
+          email,
+          password,
+        }).unwrap();
+        dispatch(setCredentials({ ...res }));
+        toast.success("Profile updated successfully");
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
+    }
   };
 
   return (
@@ -95,6 +98,10 @@ const ProfileScreen = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
             ></Form.Control>
           </Form.Group>
+          <Button type="submit" variant="primary">
+            Update
+          </Button>
+          {loadingUpdateProfile && <Loader />}
         </Form>
       </Col>
       <Col md={9}>col</Col>
@@ -102,11 +109,6 @@ const ProfileScreen = () => {
   );
 
   //const { data: orders, isLoading, error } = useGetMyOrdersQuery();
-
-  // const [
-  //   updateProfile,
-  //   { isLoading: loadingUpdateProfile },
-  // ] = useProfileMutation();
 
   // useEffect(() => {
   //   setName(userInfo.name);
@@ -119,10 +121,6 @@ const ProfileScreen = () => {
   //   <Row>
   //     <Col md={3}>
 
-  //         <Button type="submit" variant="primary">
-  //           Update
-  //         </Button>
-  //         {loadingUpdateProfile && <Loader />}
   //       </Form>
   //     </Col>
   //     <Col md={9}>
