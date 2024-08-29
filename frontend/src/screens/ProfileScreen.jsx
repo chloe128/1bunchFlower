@@ -12,7 +12,6 @@ import { setCredentials } from "../slices/authSlice";
 import { Link } from "react-router-dom";
 
 const ProfileScreen = () => {
-  //return <div>Profilescreen</div>;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,7 +21,14 @@ const ProfileScreen = () => {
 
   const { userInfo } = useSelector((state) => state.auth);
 
-  useEffect(() => {});
+  useEffect(() => {
+    if (userInfo) {
+      setName(userInfo.name);
+      setEmail(userInfo.email);
+    }
+  }, [userInfo.name, userInfo.email]);
+
+  return <div>Profilescreen</div>;
   //const { data: orders, isLoading, error } = useGetMyOrdersQuery();
 
   // const [
